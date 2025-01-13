@@ -1,2 +1,50 @@
-# Vrit-Task-1
-This is a Task 1 for Vrit 
+<title>Vertical Sliding Cards</title> <style> body { margin: 0; font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background: linear-gradient(45deg, #f39c6b, #8e44ad); overflow: hidden; }
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transform: translateY(0);
+  transition: transform 0.5s ease;
+}
+
+.card {
+  width: 300px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.top-rect {
+  width: 80%;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+}
+
+.circle {
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+}
+
+.line {
+  width: 70%;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
+}
+</style>
+<script> const container = document.querySelector('.container'); let isDragging = false; let startY; let startTransform = 0; container.addEventListener('mousedown', (e) => { isDragging = true; startY = e.clientY; const matrix = window.getComputedStyle(container).transform; startTransform = matrix !== 'none' ? parseFloat(matrix.split(',')[5]) : 0; document.body.style.cursor = 'grabbing'; }); document.addEventListener('mouseup', () => { isDragging = false; document.body.style.cursor = 'default'; }); document.addEventListener('mousemove', (e) => { if (!isDragging) return; const deltaY = e.clientY - startY; container.style.transform = `translateY(${startTransform + deltaY}px)`; }); document.addEventListener('wheel', (e) => { e.preventDefault(); const deltaY = e.deltaY; const matrix = window.getComputedStyle(container).transform; const currentTransform = matrix !== 'none' ? parseFloat(matrix.split(',')[5]) : 0; container.style.transform = `translateY(${currentTransform - deltaY}px)`; }); </script>
